@@ -1,3 +1,15 @@
-<h1>My First AngularDart App</h1>
-
-<todo-list></todo-list>
+<div class="material-content">
+    <header class="material-header shadow">
+        <div class="material-header-row">
+            <span class="material-header-title">Corey Web App</span>
+            <div class="material-spacer"></div>
+            <img class="icon" [src]="firebase.user?.photoURL">
+            <div id="user-name">{{firebase.user?.displayName}}</div>
+            <material-button (trigger)="login()">Login</material-button>
+        </div>
+    </header>
+    <material-tab-strip (tabChange)="onTabChange($event)"
+                        [tabLabels]="tabLabels">
+    </material-tab-strip>
+    <router-outlet> </router-outlet>
+</div>

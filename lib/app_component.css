@@ -1,3 +1,16 @@
 :host {
     /* This is equivalent of the 'body' selector of a page. */
 }
+
+.material-header-row {
+    background-color: #8BC34A;
+}
+.material-header.shadow  {
+    background-color: #8BC34A;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+}

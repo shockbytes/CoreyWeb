@@ -12,3 +12,5 @@ doc/api/
 # WebStorm files
 .idea/
 *.iml
+
+web/firebase_config.json
