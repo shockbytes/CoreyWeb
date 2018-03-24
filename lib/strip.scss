@@ -1,0 +1,6 @@
+@import 'package:angular_components/css/material/material';
+@import 'package:angular_components/material_tab/mixins';
+
+// Custom Tab styles
+@include tab-strip-color('my-app', #FF9800, #FF9800);
+@include tab-strip-selected-tab-color('my-app', #FF9800);

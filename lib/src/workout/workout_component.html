@@ -1,5 +1,8 @@
 <!-- Components info: https://webdev.dartlang.org/components -->
-<div>
-  <h1>This is the workout component!</h1>
+<div class="grid grid-pad">
+    <a *ngFor="let workout of firebase.workouts" class="col-1-4">
+        <div class="module workout">
+            <h4>{{workout.name}}</h4>
+        </div>
+    </a>
 </div>
-

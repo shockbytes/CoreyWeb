@@ -1,5 +1,8 @@
 # CoreyWeb
 
+Web application for the Corey Android app. 
+
+## License
 A web app that uses [AngularDart](https://webdev.dartlang.org/angular) and
 [AngularDart Components](https://webdev.dartlang.org/components).
 

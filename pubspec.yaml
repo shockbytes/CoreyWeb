@@ -5,7 +5,7 @@ version: 0.0.1
 #author: Martin Macheiner <shockbytesstudio@gmail.com>
 
 environment:
-  sdk: '>=1.24.0 <2.0.0'
+  sdk: '>=1.24.0 <= 2.0.0-dev.30.0'
 
 dependencies:
   angular: ^4.0.0
@@ -13,6 +13,7 @@ dependencies:
   firebase: ^4.1.0
   angular_forms: ^1.0.0
   angular_router: ^1.0.2
+  sass_builder: ^1.0.1
 
 dev_dependencies:
   angular_test: ^1.0.0
@@ -21,6 +22,7 @@ dev_dependencies:
   test: ^0.12.0
 
 transformers:
+- sass_builder
 - angular:
     entry_points:
       - web/main.dart
