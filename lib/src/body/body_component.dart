@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:CoreyWeb/src/service/database_service.dart';
 import 'package:CoreyWeb/src/service/firebase_service.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
@@ -17,15 +18,14 @@ import 'package:angular_components/angular_components.dart';
 )
 class BodyComponent implements OnInit {
 
-  final FirebaseService _firebase;
+  final DatabaseService databaseService;
 
   String name;
 
-  BodyComponent(FirebaseService this._firebase);
+  BodyComponent(FirebaseService this.databaseService);
 
   Future<Null> ngOnInit() async {
-    name = _firebase.user?.displayName;
-    //heroes = (await _heroService.getHeroes()).skip(1).take(4).toList();
+
   }
 
 }

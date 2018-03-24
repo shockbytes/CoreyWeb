@@ -3,6 +3,7 @@
 
 import 'dart:async';
 
+import 'package:CoreyWeb/src/service/database_service.dart';
 import 'package:CoreyWeb/src/service/firebase_service.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
@@ -19,12 +20,12 @@ import 'package:angular_components/angular_components.dart';
 )
 class ScheduleComponent {
 
-  final FirebaseService _firebase;
+  final DatabaseService databaseService;
 
-  ScheduleComponent(FirebaseService this._firebase);
+  ScheduleComponent(FirebaseService this.databaseService);
 
   Future<Null> ngOnInit() async {
-    // TODO
+
   }
 
 }

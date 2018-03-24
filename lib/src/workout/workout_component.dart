@@ -1,7 +1,6 @@
-import 'dart:async';
 
+import 'package:CoreyWeb/src/service/database_service.dart';
 import 'package:CoreyWeb/src/service/firebase_service.dart';
-import 'package:CoreyWeb/src/service/model/workout.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 
@@ -19,8 +18,8 @@ import 'package:angular_components/angular_components.dart';
 )
 class WorkoutComponent {
 
-  final FirebaseService firebase;
+  final DatabaseService databaseService;
 
-  WorkoutComponent(FirebaseService this.firebase);
+  WorkoutComponent(FirebaseService this.databaseService);
 
 }

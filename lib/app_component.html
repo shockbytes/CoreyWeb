@@ -3,10 +3,10 @@
         <div class="material-header-row">
             <span class="material-header-title">Corey Web App</span>
             <div class="material-spacer"></div>
-            <img *ngIf="firebase.user != null" class="icon" [src]="firebase.user?.photoURL">
-            <div *ngIf="firebase.user != null" class="user-name">{{firebase.user?.displayName}}</div>
-            <material-button *ngIf="firebase.user == null" (trigger)="login()">Login</material-button>
-            <material-button *ngIf="firebase.user != null" (trigger)="logout()">Logout</material-button>
+            <img *ngIf="databaseService.user != null" class="icon" [src]="databaseService.user?.photoURL">
+            <div *ngIf="databaseService.user != null" class="user-name">{{databaseService.user?.name}}</div>
+            <material-button *ngIf="databaseService.user == null" (trigger)="login()">Login</material-button>
+            <material-button *ngIf="databaseService.user != null" (trigger)="logout()">Logout</material-button>
         </div>
     </header>
     <material-tab-strip (tabChange)="onTabChange($event)"

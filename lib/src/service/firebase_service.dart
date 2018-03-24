@@ -2,7 +2,9 @@ import 'dart:html';
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:CoreyWeb/src/service/database_service.dart';
 import 'package:CoreyWeb/src/service/model/body_info.dart';
+import 'package:CoreyWeb/src/service/model/corey_user.dart';
 import 'package:CoreyWeb/src/service/model/goal.dart';
 import 'package:CoreyWeb/src/service/model/schedule_item.dart';
 import 'package:CoreyWeb/src/service/model/workout.dart';
@@ -10,7 +12,7 @@ import 'package:angular/angular.dart';
 import 'package:firebase/firebase.dart' as fb;
 
 @Injectable()
-class FirebaseService {
+class FirebaseService implements DatabaseService {
   // Private fields
   fb.Auth _fbAuth;
   fb.GoogleAuthProvider _fbGoogleAuthProvider;
@@ -20,7 +22,7 @@ class FirebaseService {
   fb.DatabaseReference _fbRefBodyGoals;
 
   // Public fields
-  fb.User user;
+  CoreyUser user;
   List<Workout> workouts;
   List<ScheduleItem> schedule;
   BodyInfo bodyInfo = new BodyInfo(0, []);
@@ -53,7 +55,7 @@ class FirebaseService {
   }
 
   void _authChanged(fb.User fbUser) {
-    user = fbUser;
+    user = new CoreyUser(fbUser.displayName, fbUser.email, fbUser.photoURL);
   }
 
   void _setupAuth() {

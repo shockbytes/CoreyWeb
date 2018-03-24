@@ -1,5 +1,6 @@
 import 'package:CoreyWeb/src/body/body_component.dart';
 import 'package:CoreyWeb/src/schedule/schedule_component.dart';
+import 'package:CoreyWeb/src/service/database_service.dart';
 import 'package:CoreyWeb/src/service/firebase_service.dart';
 import 'package:CoreyWeb/src/workout/workout_component.dart';
 import 'package:angular/angular.dart';
@@ -49,11 +50,11 @@ import 'package:angular_router/angular_router.dart';
 ])
 class AppComponent {
 
-  final FirebaseService firebase;
+  final DatabaseService databaseService;
   final Router _router;
   final tabLabels = const <String>['Workout', 'Schedule', 'My Body'];
 
-  AppComponent(FirebaseService this.firebase, this._router);
+  AppComponent(FirebaseService this.databaseService, this._router);
 
   void onTabChange(TabChangeEvent event) {
     switch (event.newIndex) {
@@ -72,11 +73,11 @@ class AppComponent {
   }
 
   void login() {
-    firebase.signIn();
+    databaseService.signIn();
   }
 
   void logout() {
-    firebase.signOut();
+    databaseService.signOut();
   }
 
 }
