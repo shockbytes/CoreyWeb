@@ -130,7 +130,6 @@ class FirebaseService {
   void _newSchedule(fb.QueryEvent event) {
     ScheduleItem item = new ScheduleItem.fromMap(event.snapshot.val());
     schedule.add(item);
-    print(item);
   }
 
   void _changeSchedule(fb.QueryEvent event) {
@@ -148,8 +147,7 @@ class FirebaseService {
   void _setupBodyInfoDatabase() {
 
     _fbRefBodyDesired = fb.database().ref("body/desired");
-    _fbRefBodyDesired.onChildAdded.listen(_bodyInfoDesiredWeight);
-    _fbRefBodyDesired.onChildChanged.listen(_bodyInfoDesiredWeight);
+    _fbRefBodyDesired.onValue.listen(_bodyInfoDesiredWeight);
 
     _fbRefBodyGoals = fb.database().ref("body/goal");
     _fbRefBodyGoals.onChildAdded.listen(_newBodyInfoGoals);
@@ -158,15 +156,12 @@ class FirebaseService {
   }
 
   void _bodyInfoDesiredWeight(fb.QueryEvent event) {
-    print("Desired");
     bodyInfo.desiredWeight = event.snapshot.val();
-    print(bodyInfo.desiredWeight);
   }
 
   void _newBodyInfoGoals(fb.QueryEvent event) {
     Goal goal = new Goal.fromMap(event.snapshot.val());
     bodyInfo.goals.add(goal);
-    print(goal);
   }
 
   void _changeBodyInfoGoals(fb.QueryEvent event) {
