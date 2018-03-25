@@ -1,0 +1,44 @@
+
+.body-container {
+
+    padding: 20px;
+
+    text-align: center;
+    background-color: #FFF;
+    border-radius: 4px;
+
+    margin-top: 48px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 400px;
+    width: 600px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.avatar-icon {
+    width: 104px;
+    height: 104px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.avatar-name {
+    color: #424242;
+    font-size: x-large;
+    margin: 24px auto 12px;
+}
+
+.avatar-mail {
+    color: #646464;
+    font-size: medium;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.desired_weight {
+    margin-top: 16px;
+}

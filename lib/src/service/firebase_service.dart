@@ -24,7 +24,7 @@ class FirebaseService implements DatabaseService {
   CoreyUser user;
   List<Workout> workouts;
   List<ScheduleItem> schedule;
-  BodyInfo bodyInfo = new BodyInfo(0, []);
+  BodyInfo bodyInfo;
 
   FirebaseService() {
     _setup();
@@ -149,6 +149,7 @@ class FirebaseService implements DatabaseService {
 
   // --------------- Body info logic -----------------
   void _setupBodyInfoDatabase() {
+    bodyInfo = new BodyInfo(0, []);
     _fbRefBodyDesired = fb.database().ref("body/desired");
     _fbRefBodyDesired.onValue.listen(_bodyInfoDesiredWeight);
 
@@ -175,5 +176,9 @@ class FirebaseService implements DatabaseService {
   void _removeBodyInfoGoals(fb.QueryEvent event) {
     Goal goal = new Goal.fromMap(event.snapshot.val());
     bodyInfo.goals.removeWhere((g) => g.id == goal.id);
+  }
+
+  void setDesiredWeight(int weight) {
+    _fbRefBodyDesired.set(weight);
   }
 }

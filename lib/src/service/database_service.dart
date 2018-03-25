@@ -11,7 +11,12 @@ abstract class DatabaseService {
   List<ScheduleItem> schedule;
   BodyInfo bodyInfo;
 
+  // Login
   Future signIn();
 
   void signOut();
+
+  // Body Info
+  void setDesiredWeight(int weight);
+
 }

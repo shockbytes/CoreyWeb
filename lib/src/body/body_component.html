@@ -1,4 +1,14 @@
-<h1>
-    My Body component!
-</h1>
-<div>{{name}}</div>
+<div class="body-container" *ngIf="databaseService.user != null">
+
+    <img class="avatar-icon" [src]="databaseService.user?.photoURL">
+    <div class="avatar-name">{{databaseService.user?.name}}</div>
+    <div class="avatar-mail">{{databaseService.user?.email}}</div>
+
+    <hr>
+
+    <material-input floatingLabel class="desired_weight" [rightAlign]="true"
+                    label="Desired Weight" trailingText="kg" type="number"
+                    [(ngModel)]="databaseService.bodyInfo.desiredWeight"
+                    (change)="onChange($event)" required
+                    requiredErrorMsg="Your desired weight cannot be 0kg!"></material-input>
+</div>

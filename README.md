@@ -13,7 +13,7 @@ Web application for the Corey Android app.
 ### Version 0.6
 - [x] Show workouts
 - [x] Show schedule
-- [ ] Show body info
+- [x] Show body info
 - [ ] Show workout details
 
 ## License

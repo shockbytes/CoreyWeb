@@ -43,6 +43,7 @@ h4 {
     background-color: #FF9800;
     border-radius: 4px;
     margin: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .module_today {
@@ -67,6 +68,7 @@ h4 {
     background-color: #fff;
     border-radius: 4px;
     margin: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .module_schedule:hover {

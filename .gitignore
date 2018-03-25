@@ -22,3 +22,4 @@ lib/src/service/firebase_credentials.dart
 
 # External components
 /node_modules
+/lib/@material
