@@ -25,7 +25,7 @@ class BodyComponent implements OnInit {
   BodyComponent(FirebaseService this.databaseService);
 
   Future<Null> ngOnInit() async {
-
+    name = databaseService.user?.name;
   }
 
 }

@@ -1,8 +1,7 @@
-import 'dart:html';
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:CoreyWeb/src/service/database_service.dart';
+import 'package:CoreyWeb/src/service/firebase_credentials.dart';
 import 'package:CoreyWeb/src/service/model/body_info.dart';
 import 'package:CoreyWeb/src/service/model/corey_user.dart';
 import 'package:CoreyWeb/src/service/model/goal.dart';
@@ -21,41 +20,36 @@ class FirebaseService implements DatabaseService {
   fb.DatabaseReference _fbRefBodyDesired;
   fb.DatabaseReference _fbRefBodyGoals;
 
-  // Public fields
+  // Inherited fields
   CoreyUser user;
   List<Workout> workouts;
   List<ScheduleItem> schedule;
   BodyInfo bodyInfo = new BodyInfo(0, []);
 
   FirebaseService() {
-    _loadCredentials();
+    _setup();
   }
 
-  void _loadCredentials() {
-    var url = "http://localhost:8080/firebase_config.json";
-    HttpRequest.getString(url).then(_onCredentialsLoaded).catchError(_onError);
-  }
-
-  void _onCredentialsLoaded(String response) {
-    var json = JSON.decode(response);
+  void _setup() {
+    var credentials = FirebaseCredentials.getCredentials();
 
     fb.initializeApp(
-        apiKey: json["apiKey"],
-        authDomain: json["authDomain"],
-        databaseURL: json["databaseURL"],
-        storageBucket: json["storageBucket"]);
+        apiKey: credentials["apiKey"],
+        authDomain: credentials["authDomain"],
+        databaseURL: credentials["databaseURL"],
+        storageBucket: credentials["storageBucket"]);
 
     _setupAuth();
     _setupDatabase();
   }
 
-  bool _onError(Object any) {
-    print("Error while requesting data... $any");
-    return true;
-  }
-
   void _authChanged(fb.User fbUser) {
-    user = new CoreyUser(fbUser.displayName, fbUser.email, fbUser.photoURL);
+    // User logged in
+    if (fbUser != null) {
+      user = new CoreyUser(fbUser.displayName, fbUser.email, fbUser.photoURL);
+    } else {
+      user = null;
+    }
   }
 
   void _setupAuth() {
@@ -75,18 +69,13 @@ class FirebaseService implements DatabaseService {
   Future signIn() async {
     try {
       await _fbAuth.signInWithPopup(_fbGoogleAuthProvider);
-      print(_fbAuth.currentUser.displayName);
     } catch (error) {
-      print("$runtimeType::login() -- $error");
+      print("$runtimeType::login() -- $error | While sign in!");
     }
   }
 
   void signOut() {
     _fbAuth.signOut();
-  }
-
-  bool isSignedIn() {
-    return _fbAuth.currentUser != null;
   }
 
   // -------------------------------------------------
@@ -100,7 +89,9 @@ class FirebaseService implements DatabaseService {
   }
 
   void _changeWorkout(fb.QueryEvent event) {
-    // TODO
+    Workout workout =
+        new Workout.fromMap(event.snapshot.val(), event.snapshot.key);
+    // TODO Extract index of Workout
   }
 
   void _removeWorkout(fb.QueryEvent event) {
@@ -122,7 +113,9 @@ class FirebaseService implements DatabaseService {
   // ---------------- Schedule logic -----------------
 
   void _setupScheduleDatabase() {
-    schedule = [];
+    schedule =
+        new List.generate(7, (i) => new ScheduleItem(day: i), growable: false);
+
     _fbRefSchedule = fb.database().ref("schedule");
     _fbRefSchedule.onChildAdded.listen(_newSchedule);
     _fbRefSchedule.onChildChanged.listen(_changeSchedule);
@@ -131,23 +124,31 @@ class FirebaseService implements DatabaseService {
 
   void _newSchedule(fb.QueryEvent event) {
     ScheduleItem item = new ScheduleItem.fromMap(event.snapshot.val());
-    schedule.add(item);
+    schedule[item.day] = item;
   }
 
   void _changeSchedule(fb.QueryEvent event) {
-    // TODO
+    ScheduleItem item = new ScheduleItem.fromMap(event.snapshot.val());
+
+    // Remove old position with the same id
+    schedule
+        .where((it) => it.id == item.id)
+        .map((it) => it.day)
+        .forEach((day) => schedule[day] = new ScheduleItem(day: day));
+
+    // Update the new item
+    schedule[item.day] = item;
   }
 
   void _removeSchedule(fb.QueryEvent event) {
     ScheduleItem item = new ScheduleItem.fromMap(event.snapshot.val());
-    schedule.removeWhere((w) => w.id == item.id);
+    schedule[item.day] = new ScheduleItem(day: item.day);
   }
 
   // -------------------------------------------------
 
   // --------------- Body info logic -----------------
   void _setupBodyInfoDatabase() {
-
     _fbRefBodyDesired = fb.database().ref("body/desired");
     _fbRefBodyDesired.onValue.listen(_bodyInfoDesiredWeight);
 
@@ -167,12 +168,12 @@ class FirebaseService implements DatabaseService {
   }
 
   void _changeBodyInfoGoals(fb.QueryEvent event) {
-    // TODO
+    Goal goal = new Goal.fromMap(event.snapshot.val());
+    // TODO Extract index of goal
   }
 
   void _removeBodyInfoGoals(fb.QueryEvent event) {
     Goal goal = new Goal.fromMap(event.snapshot.val());
     bodyInfo.goals.removeWhere((g) => g.id == goal.id);
   }
-
 }

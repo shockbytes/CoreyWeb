@@ -1,3 +1,14 @@
-<h1>
-    Schedule component!
-</h1>
+<div style="margin-top: 48px" class="grid grid-pad" >
+    <a *ngFor="let day of days; let i = index" [attr.data-index]="i" class="col-days">
+        <div class="module" [ngClass]="{module_today: i == today}">
+            <h4>{{day}}</h4>
+        </div>
+    </a>
+</div>
+<div class="grid grid-pad" >
+    <a *ngFor="let schedule of databaseService.schedule" class="col-days">
+        <div class="module_schedule" [ngClass]="{module_schedule_empty: schedule.isEmpty}">
+            <h4>{{schedule.name}}</h4>
+        </div>
+    </a>
+</div>

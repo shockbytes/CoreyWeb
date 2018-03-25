@@ -5,7 +5,6 @@ import 'package:CoreyWeb/src/service/model/corey_user.dart';
 import 'package:CoreyWeb/src/service/model/schedule_item.dart';
 import 'package:CoreyWeb/src/service/model/workout.dart';
 
-
 abstract class DatabaseService {
   CoreyUser user;
   List<Workout> workouts;
@@ -13,6 +12,6 @@ abstract class DatabaseService {
   BodyInfo bodyInfo;
 
   Future signIn();
-  void signOut();
 
-  }
+  void signOut();
+}

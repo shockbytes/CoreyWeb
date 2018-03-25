@@ -13,4 +13,12 @@ doc/api/
 .idea/
 *.iml
 
-web/firebase_config.json
+# Firebase related files
+firebase.json
+.firebaserc
+
+# Contains firebase credentials and should not be exposed to Git
+lib/src/service/firebase_credentials.dart
+
+# External components
+/node_modules

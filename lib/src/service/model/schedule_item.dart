@@ -4,10 +4,10 @@ class ScheduleItem {
   int day;
   bool isEmpty;
 
-  ScheduleItem(this.id, this.name, this.day, this.isEmpty);
+  ScheduleItem({this.day = 0, this.id = "", this.name = "empty", this.isEmpty = true});
 
   ScheduleItem.fromMap(Map map)
-      : this(map['id'], map['name'], map["day"], map["empty"]);
+      : this(id: map['id'], name: map['name'], day: map["day"],isEmpty: map["empty"]);
 
   Map toMap() => {
     "id": id,
