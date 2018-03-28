@@ -1,5 +1,5 @@
 <div style="margin-top: 48px" class="grid grid-pad">
-    <a *ngFor="let workout of databaseService.workouts" class="col-1-4">
+    <a *ngFor="let workout of databaseService.workouts" class="col-1-4" (click)="workoutClick(workout)">
         <div class="module workout" >
             <h4>{{workout.name}}</h4>
         </div>
