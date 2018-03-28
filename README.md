@@ -5,15 +5,13 @@ Web application for the Corey Android app.
 ## Versions
 
 ### Version 1.0
-- [ ] Modify/Delete schedule
-- [ ] Modify desired weight
-- [ ] Add body goal
-- [ ] Delete workouts
-
-### Version 0.6
+- [x] Modify/Delete schedule
+- [x] Modify desired weight
 - [x] Show workouts
 - [x] Show schedule
 - [x] Show body info
+- [ ] Add body goal
+- [ ] Delete workouts
 - [ ] Show workout details
 
 ## License

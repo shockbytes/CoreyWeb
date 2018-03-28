@@ -20,6 +20,18 @@ class FirebaseService implements DatabaseService {
   fb.DatabaseReference _fbRefBodyDesired;
   fb.DatabaseReference _fbRefBodyGoals;
 
+  // TODO Maybe find a way to somehow include RemoteConfig?
+  final _additionalScheduleItems = const <String>[
+    'Freeletics',
+    'FL Running',
+    'Schwimmen',
+    'Kraftkammer',
+    'Laufen',
+    'Dehnen',
+    'Spazieren',
+    'Rad fahren'
+  ];
+
   // Inherited fields
   CoreyUser user;
   List<Workout> workouts;
@@ -66,6 +78,7 @@ class FirebaseService implements DatabaseService {
 
   // ----------------- Sign in logic -----------------
 
+  @override
   Future signIn() async {
     try {
       await _fbAuth.signInWithPopup(_fbGoogleAuthProvider);
@@ -74,6 +87,7 @@ class FirebaseService implements DatabaseService {
     }
   }
 
+  @override
   void signOut() {
     _fbAuth.signOut();
   }
@@ -84,19 +98,20 @@ class FirebaseService implements DatabaseService {
 
   void _newWorkout(fb.QueryEvent event) {
     Workout workout =
-        new Workout.fromMap(event.snapshot.val(), event.snapshot.key);
+    new Workout.fromMap(event.snapshot.val(), event.snapshot.key);
     workouts.add(workout);
   }
 
   void _changeWorkout(fb.QueryEvent event) {
     Workout workout =
-        new Workout.fromMap(event.snapshot.val(), event.snapshot.key);
-    // TODO Extract index of Workout
+    new Workout.fromMap(event.snapshot.val(), event.snapshot.key);
+    int idx = workouts.indexWhere((w) => w.id == w.id);
+    workouts[idx] = workout;
   }
 
   void _removeWorkout(fb.QueryEvent event) {
     Workout workout =
-        new Workout.fromMap(event.snapshot.val(), event.snapshot.key);
+    new Workout.fromMap(event.snapshot.val(), event.snapshot.key);
     workouts.removeWhere((w) => w.id == workout.id);
   }
 
@@ -114,7 +129,7 @@ class FirebaseService implements DatabaseService {
 
   void _setupScheduleDatabase() {
     schedule =
-        new List.generate(7, (i) => new ScheduleItem(day: i), growable: false);
+    new List.generate(7, (i) => new ScheduleItem(day: i), growable: false);
 
     _fbRefSchedule = fb.database().ref("schedule");
     _fbRefSchedule.onChildAdded.listen(_newSchedule);
@@ -170,7 +185,8 @@ class FirebaseService implements DatabaseService {
 
   void _changeBodyInfoGoals(fb.QueryEvent event) {
     Goal goal = new Goal.fromMap(event.snapshot.val());
-    // TODO Extract index of goal
+    int idx = bodyInfo.goals.indexWhere((g) => g.id == goal.id);
+    bodyInfo.goals[idx] = goal;
   }
 
   void _removeBodyInfoGoals(fb.QueryEvent event) {
@@ -180,5 +196,29 @@ class FirebaseService implements DatabaseService {
 
   void setDesiredWeight(int weight) {
     _fbRefBodyDesired.set(weight);
+  }
+
+  @override
+  void pushScheduleItem(String name, int day) {
+    var ref = _fbRefSchedule.push();
+    var item = new ScheduleItem(name: name, day: day,
+        isEmpty: false, id: ref.key);
+    ref.set(item.toMap());
+  }
+
+  @override
+  void updateScheduleItem(ScheduleItem item) {
+    _fbRefSchedule.child(item.id).set(item.toMap());
+  }
+
+  @override
+  void removeScheduleItem(ScheduleItem item) {
+    _fbRefSchedule.child(item.id).remove();
+  }
+
+  @override
+  List<String> availableScheduleItems() {
+    return new List<String>.from(workouts.map((w) => w.name))
+      ..addAll(_additionalScheduleItems);
   }
 }

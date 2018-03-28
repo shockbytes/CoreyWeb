@@ -20,6 +20,7 @@ import 'package:angular_router/angular_router.dart';
   directives: const [
     materialDirectives,
     WorkoutComponent,
+    ScheduleComponent,
     MaterialTabComponent,
     MaterialTabPanelComponent,
     DeferredContentDirective,

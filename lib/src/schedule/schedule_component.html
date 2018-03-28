@@ -1,14 +1,39 @@
-<div style="margin-top: 48px" class="grid grid-pad" >
+<div style="margin-top: 48px" class="grid grid-pad">
     <a *ngFor="let day of days; let i = index" [attr.data-index]="i" class="col-days">
         <div class="module" [ngClass]="{module_today: i == today}">
             <h4>{{day}}</h4>
         </div>
     </a>
 </div>
-<div class="grid grid-pad" >
-    <a *ngFor="let schedule of databaseService.schedule" class="col-days">
+<div class="grid grid-pad">
+    <a *ngFor="let schedule of databaseService.schedule" class="col-days" (click)="scheduleClick(schedule)">
         <div class="module_schedule" [ngClass]="{module_schedule_empty: schedule.isEmpty}">
             <h4>{{schedule.name}}</h4>
         </div>
     </a>
 </div>
+
+<modal [visible]="showScheduleDetailDialog">
+    <material-dialog>
+        <div header>
+            <h1>{{scheduleDetailDay}}</h1>
+            <h4>{{scheduleName}}</h4>
+        </div>
+
+        <div grid grid-pad style="width: 100%">
+            <material-button *ngFor="let item of databaseService.availableScheduleItems()"
+                             (trigger)="scheduleItemSelected(item)"
+                             class="list_button">{{item}}
+            </material-button>
+        </div>
+
+        <div footer>
+            <material-button *ngIf="scheduleName.isNotEmpty" style="color: #F44336" (trigger)="clearDay()">
+                Remove
+            </material-button>
+            <material-button (trigger)="showScheduleDetailDialog = false">
+                Close
+            </material-button>
+        </div>
+    </material-dialog>
+</modal>

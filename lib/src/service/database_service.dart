@@ -19,4 +19,13 @@ abstract class DatabaseService {
   // Body Info
   void setDesiredWeight(int weight);
 
+  // Schedule
+  void pushScheduleItem(String name, int day);
+
+  void removeScheduleItem(ScheduleItem item);
+
+  void updateScheduleItem(ScheduleItem item);
+
+  List<String> availableScheduleItems();
+
 }
